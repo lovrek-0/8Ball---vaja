@@ -13,20 +13,21 @@ def index():
 @app.route("/8Ball", methods = ["POST"])
 def ball():
 
-    napis = request.form.get("textid", "")
-    naključni_odgovori = [
-    "Seveda!", 
-    "Brez dvoma.", 
-    "Lahko računaš na to.", 
-    "Zelo verjetno.", 
-    "Izgleda dobro.", 
-    "Poskusi znova kasneje.", 
-    "Raje ti ne povem zdaj.", 
-    "Ne računaj na to.", 
-    "Moj odgovor je ne.", 
-    "Zelo dvomim."]
+    napis = request.form.get("text", "").lower()
 
-    r = random.choice(naključni_odgovori)
+    naključni_odgovori = [
+        "Seveda!", 
+        "Brez dvoma.", 
+        "Lahko računaš na to.", 
+        "Zelo verjetno.", 
+        "Izgleda dobro.", 
+        "Poskusi znova kasneje.", 
+        "Raje ti ne povem zdaj.", 
+        "Ne računaj na to.", 
+        "Moj odgovor je ne.", 
+        "Zelo dvomim."
+    ]
+
 
     if "ljubezen" in napis:
         r =  "Kupi raje GPU"
@@ -36,11 +37,13 @@ def ball():
         r =  "Burek only"
     elif "profesor" in napis:
         r =  "F speedrun"
-    elif "!" in napis:
+    elif napis.endswith("!"):
         r =  "Ne kriči"
     else:
         r =  random.choice(naključni_odgovori)
     
     return  render_template("index.html", rezultat = r)
 
-app.run(debug= True, port=5000)
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
+#app.run(debug=True, port=5000)
